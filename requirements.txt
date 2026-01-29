@@ -4,3 +4,4 @@ pydantic
 python-dotenv
 pymongo
 mongod
+passlib[bcrypt]
