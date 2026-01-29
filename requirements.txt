@@ -2,3 +2,5 @@ fastapi
 uvicorn
 pydantic
 python-dotenv
+pymongo
+mongod
