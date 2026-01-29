@@ -130,7 +130,7 @@ __pypackages__/
 # Celery stuff
 celerybeat-schedule
 celerybeat.pid
-
+local_test.py
 # SageMath parsed files
 *.sage.py
 
