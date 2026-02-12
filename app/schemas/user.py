@@ -1,25 +1,22 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 class UserRegister(BaseModel):
-    """
-    Request schema for user registration.
-    """
-    email: EmailStr = Field(..., example="user@example.com")
-    password: str = Field(..., min_length=8, example="StrongPass123")
+    email: EmailStr
+    password: str = Field(..., min_length=8)
+
+    @field_validator("password")
+    def password_strength(cls, v):
+        if v.islower() or v.isalpha():
+            raise ValueError("Password must contain numbers or uppercase letters")
+        return v
 
 
 class UserLogin(BaseModel):
-    """
-    Request schema for user login.
-    """
-    email: EmailStr = Field(..., example="user@example.com")
-    password: str = Field(..., example="StrongPass123")
+    email: EmailStr
+    password: str
 
 
 class UserResponse(BaseModel):
-    """
-    Response schema for user-related responses.
-    """
     id: str
     email: EmailStr

@@ -40,11 +40,16 @@ def get_user_vault(user_id: str = Depends(get_current_user)):
     Retrieve all vault entries for authenticated user.
     """
 
-    items = mongodb.vault.find({"user_id": user_id})
+    items = mongodb.vault.find({"user_id": str(user_id)})
+
 
     results = []
     for item in items:
-        decrypted = encryption_service.decrypt(item["encrypted_data"])
+        try:
+            decrypted = encryption_service.decrypt(item["encrypted_data"])
+        except Exception:
+            decrypted = "[Decryption failed]"
+
 
         results.append({
             "id": str(item["_id"]),

@@ -51,11 +51,19 @@ def login(user: UserLogin):
     db_user = mongodb.users.find_one({"email": user.email})
 
     if not db_user:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(
+    status_code=401,
+    detail="Invalid email or password"
+)
+
 
     # Verify password
     if not verify_password(user.password, db_user["hashed_password"]):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(
+    status_code=401,
+    detail="Invalid email or password"
+)
+
 
     # Create token
     token = create_access_token({"sub": str(db_user["_id"])})
